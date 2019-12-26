@@ -127,12 +127,6 @@ o 的值： 表示操作的内容，如果是插入，就会将插入的数据�
 ./mongorestore --host 127.0.0.1 --port 27017 --authenticationDatabase admin --username root --password root  --oplogReplay --oplogLimit "1573179000"   /data/mongodb_back/mongotestdump
 ```
 
-##### GridFS 无法通过上述方式备份
-
-```javascript
-#GridFS 无法通过上述方式备份
-```
-
 ##### 创建角色并授权
 
 ```javascript
@@ -148,5 +142,34 @@ db.createUser(
 )
 ```
 
+##### 开启慢查询
 
+```javascript
+db.getProfilingStatus() 
+#查看级别
+db.getProfilingLevel() 
+#设置级别和时间
+db.setProfilingLevel(2,200)
+# 关闭
+db.setProfilingLevel(0)
+```
+
+
+
+##### 慢查询
+
+```javascript
+#查询运行时间大于500毫秒的语句
+db.system.profile.find( { millis : { $gt : 500 } } )
+#查询最近的语句
+db.system.profile.find().sort({$natural:-1})
+#查询一段时间内的语句
+db.system.profile.find({ts:{$gt:new ISODate("2012-07-19T03:00:00Z"),$lt:new ISODate("2012-07-19T03:40:00Z")}})
+```
+
+##### 认证登录
+
+```
+./mongo --host 10.1.50.15 --port 27017 -uroot -pRoot_123 --authenticationDatabase admin
+```
 
