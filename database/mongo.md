@@ -169,7 +169,33 @@ db.system.profile.find({ts:{$gt:new ISODate("2012-07-19T03:00:00Z"),$lt:new ISOD
 
 ##### 认证登录
 
-```
+```shell
 ./mongo --host 10.1.50.15 --port 27017 -uroot -pRoot_123 --authenticationDatabase admin
+```
+
+##### 判定当前节点是否为主节点
+
+```
+db.isMaster()
+```
+
+##### 备份数据库
+
+```
+./mongodump --host 10.1.50.15 --port 27017 -umongo -pMongoDB_863*^# --authenticationDatabase admin -d pacific -o /opt/mongobackup
+
+./mongodump --host 10.1.50.15 --port 27017 -umongo -pMongoDB_863*^# --authenticationDatabase admin -d cmdb -o /opt/mongobackup
+```
+
+##### 还原数据库
+
+```
+./mongorestore -h 10.1.50.15 --port 27017 -umongo -pMongoDB_863*^# --authenticationDatabase admin -d pacific /opt/mongobackup/pacific
+
+./mongorestore -h 10.1.50.15 --port 27017 -umongo -pMongoDB_863*^# --authenticationDatabase admin -d pacific /opt/mongobackup/cmdb
+
+
+./mongorestore -h 10.1.50.15 --port 27017 -umongo -pMongoDB_863*^# --authenticationDatabase admin -d cmdb /opt/mongobackup/central_plains/cmdb
+./mongorestore -h 10.1.50.15 --port 27017 -umongo -pMongoDB_863*^# --authenticationDatabase admin -d pacific /opt/mongobackup/central_plains/pacific
 ```
 

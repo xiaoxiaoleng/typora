@@ -50,6 +50,19 @@ jstatd -J-Djava.security.policy=jstatd.policy -p 1099
 
 
 
+##### 内存分析
+
+```
+jstack -l pid
+jstack -l 32318  查看此进程下线程的堆栈信息
+```
+
+##### Linux查看java进程开启的线程数量
+
+```
+top -H -p pid
+```
+
 
 
 
