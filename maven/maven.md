@@ -47,3 +47,10 @@ mvn dependency:analyze
 ```
 
 `dependency:analyze`是通过分析bytecode来输出报告。包含Used undeclared dependencies（使用但未定义的依赖项）和Unused declared dependencies（未使用但却定义的依赖项）。
+
+##### install
+
+```
+mvn clean install -DskipTests -Dfast
+```
+

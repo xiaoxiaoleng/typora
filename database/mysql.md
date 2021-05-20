@@ -156,3 +156,13 @@ mysql>show full processlist;
 这时候只要使用kill命令+对应线程前面id，将线程结束掉，就可以正常删除了。
 ```
 
+##### 查看进程
+
+```
+show full processlist;
+
+杀死进程
+kill query 293804;
+
+```
+

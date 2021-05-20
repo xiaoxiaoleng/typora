@@ -76,3 +76,5 @@ CLIENT GETNAME
 CLIENT KILL ip:port    
 ```
 
+##### 刷新
+

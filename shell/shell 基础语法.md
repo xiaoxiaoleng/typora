@@ -43,7 +43,11 @@ free | sed -n '2p' | gawk 'x = int(( $3 / $2 ) * 100) {print x}' | sed 's/$/%/'
 df -h /dev/sda1 | sed -n '/% \//p' | gawk '{ print $5 }'
 ```
 
+##### 查看大于800M文件
 
+```
+find . -type f -size +800M
+```
 
 ##### 查看某一进程使用情况
 
@@ -122,5 +126,13 @@ firewall-cmd --permanent --zone=public --remove-port=80/tcp
 systemctl status firewalld.service
 启动|关闭|重新启动  防火墙
 systemctl [start|stop|restart] firewalld.service 
+```
+
+
+
+##### curl post
+
+```
+curl -X POST --header 'Content-Type: multipart/form-data' --header 'Accept: application/json' --header 'apikey: e10adc3949ba59abbe56e057f2gg88dd' -F 'dir=root' -F 'filename=test.txt' -F 'file=@test.txt' 'http://128.96.104.181/store/fs/openapi/v2/root/test.txt'
 ```
 

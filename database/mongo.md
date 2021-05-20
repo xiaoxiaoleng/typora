@@ -177,6 +177,8 @@ db.system.profile.find({ts:{$gt:new ISODate("2012-07-19T03:00:00Z"),$lt:new ISOD
 
 ```
 db.isMaster()
+--------------
+rs.status()
 ```
 
 ##### 备份数据库
@@ -196,6 +198,168 @@ db.isMaster()
 
 
 ./mongorestore -h 10.1.50.15 --port 27017 -umongo -pMongoDB_863*^# --authenticationDatabase admin -d cmdb /opt/mongobackup/central_plains/cmdb
+
 ./mongorestore -h 10.1.50.15 --port 27017 -umongo -pMongoDB_863*^# --authenticationDatabase admin -d pacific /opt/mongobackup/central_plains/pacific
+```
+
+##### 扩展字段(incre_id)
+
+```javascript
+(function () {
+    var id = 0;
+    db.bucket.find({}).forEach(function (item) {
+        id=id+1;
+        item.incre_id = id;
+        db.bucket.save(item);
+    }); 
+})();
+
+(function () {
+    var id = 0;
+    db.resObject.find({"attrValues.lifecycleState":{ $exists: false}}).forEach(function (item) {
+         var lifecycle={};
+         lifecycle.V="using";
+         lifecycle.T="U";
+        item.attrValues.lifecycleState = lifecycle;
+        item.append_state=true;
+        db.resObject.save(item);
+    }); 
+})();
+```
+
+##### 删除字段(incre_id)
+
+```javascript
+db.bucket.update({},{$unset: {incre_id:1}},{multi: true});
+db.resObject.update({"append_state" : true},{$unset: {"attrValues.lifecycleState":""}},{multi: true});
+```
+
+##### 获取最大最小值
+
+```js
+db.collection.find().sort({age:-1}).limit(1) // for MAX
+db.collection.find().sort({age:+1}).limit(1) // for MIN
+db.resObject.find( { "attrValues.lifecycleState" : { $exists: true } }).sort({createTime:+1})
+```
+
+##### query nested conditions
+
+```javascript
+db.inventory.insertMany( [
+   { item: "journal", qty: 25, size: { h: 14, w: 21, uom: "cm" }, status: "A" },
+   { item: "notebook", qty: 50, size: { h: 8.5, w: 11, uom: "in" }, status: "A" },
+   { item: "paper", qty: 100, size: { h: 8.5, w: 11, uom: "in" }, status: "D" },
+   { item: "planner", qty: 75, size: { h: 22.85, w: 30, uom: "cm" }, status: "D" },
+   { item: "postcard", qty: 45, size: { h: 10, w: 15.25, uom: "cm" }, status: "A" }
+]);
+
+db.inventory.find( { size: { h: 14, w: 21, uom: "cm" } } )
+db.inventory.find(  { size: { w: 21, h: 14, uom: "cm" } }  )
+db.inventory.find( { "size.h": { $lt: 15 } } )
+
+```
+
+#####存在字段（lifecycleState）
+
+```javascript
+db.resObject.find( { "attrValues.lifecycleState" : { $exists: true } } ).count()
+```
+
+##### And查询
+
+```javascript
+db.resObject.find( { $and: [ { "attrValues.lifecycleState" : { $exists: true } }, { "createTime" : { "$gte" : ISODate("2018-01-11T09:34:55.556Z"), "$lt" : ISODate("2019-12-16T07:28:17.344+0000") } } ] } )
+
+db.resHistory.find({ $and: [{ "tenantId" : "e10adc3949ba59abbe56e057f20f88dd" },  { "res.attrValues.lifecycleState" : { $exists: true } }, { "res.createTime" : { "$gte" : ISODate("2018-01-11T09:34:55.556Z"), "$lt" : ISODate("2019-12-16T07:28:17.344+0000") } } ] })
+
+
+```
+
+##### 从secondary节点备份数据
+
+https://docs.mongodb.com/manual/reference/program/mongodump/
+
+```html
+
+```
+
+##### 强制修改当前节点为主节点
+
+https://docs.mongodb.com/manual/tutorial/force-member-to-be-primary/
+
+```
+
+```
+
+##### 从存活的副本集重新选举主节点
+
+https://docs.mongodb.com/manual/tutorial/reconfigure-replica-set-with-unavailable-members/
+
+```
+
+```
+
+##### 停止mongod服务
+
+https://docs.mongodb.com/manual/tutorial/manage-mongodb-processes/
+
+```
+use admin
+db.shutdownServer()
+----------
+kill <mongod process ID>
+kill -2 <mongod process ID>
+```
+
+##### mongodb被锁定后 --repair
+
+https://mongodb-documentation.readthedocs.io/en/latest/tutorial/recover-data-following-unexpected-shutdown.html
+
+```
+ 1）首先删除/var/lib/mongo/目录下的mongod.lock文件
+ rm /var/lib/mongo/mongod.lock
+ 2) repair方式启动mongodb
+ mongod -f /etc/mongod.conf --repair
+ 3) 再启动一次mongodb
+ 这里一定要再启动一次，不然启动client端仍然连不到server
+ mongod -f /etc/mongod.conf
+
+也可以重新指定一个repairPath
+
+mongod --dbpath /etc/mongo/db --repair --repairPath /etc/mongo/db0
+
+mongod --dbpath /etc/mongo/db --repair --repairPath /etc/mongo/db0
+
+查了查mongodb的文档，遂用以下方法进程修复：
+ 
+ 首先停止mongod服务，删除 mongodb.log，也可以备份一下
+ # rm -rf  /data/mongodb/mongodb.log
+ 
+ 删除mongodb进程文件
+ # rm -rf  /mongodb/mongod.lock
+ 
+ 进行修复
+
+# /usr/local/mongodb/bin/mongod --repair --dbpath /mongodb/ --repairpath /mongodb/repair/
+
+如果后台执行
+
+./mongod --repair --dbpath /data/dbdata --repairpath /data/repair/ --logpath /data/dblog/mongodbrepair.log --fork
+```
+
+##### Enable Access Control
+
+https://docs.mongodb.com/manual/tutorial/enable-authentication/
+
+##### 仅查询需返回的列("_id":1,"attrValues.lifecycleState":1)
+
+```
+db.getCollection("resObject").find({"$and":[{"attrValues.lifecycleState":{"$exists":"true"}}]},{"_id":1,"attrValues.lifecycleState":1})
+```
+
+##### ISODate字段查询
+
+```
+
 ```
 
