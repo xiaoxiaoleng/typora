@@ -136,3 +136,25 @@ systemctl [start|stop|restart] firewalld.service 
 curl -X POST --header 'Content-Type: multipart/form-data' --header 'Accept: application/json' --header 'apikey: e10adc3949ba59abbe56e057f2gg88dd' -F 'dir=root' -F 'filename=test.txt' -F 'file=@test.txt' 'http://128.96.104.181/store/fs/openapi/v2/root/test.txt'
 ```
 
+##### 获取文件大小
+
+```shell
+#列出当前目录下所有文件的大小
+ls -lht 
+#或者
+ll
+#使用du -sh * 命令也可以列出当前文件以及文件夹的大小。
+du -sh *
+#统计当前文件夹(目录)大小，并按文件大小排序
+du -sh * | sort -n
+```
+
+##### 排序
+
+```shell
+#降序：
+ls -lrsh
+#升序:
+ls -lsh
+```
+

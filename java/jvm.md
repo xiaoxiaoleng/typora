@@ -48,8 +48,6 @@ jinfo ${PID}|grep java.home
 jstatd -J-Djava.security.policy=jstatd.policy -p 1099
 ```
 
-
-
 ##### 内存分析
 
 ```
@@ -63,7 +61,11 @@ jstack -l 32318  查看此进程下线程的堆栈信息
 top -H -p pid
 ```
 
+##### 查看进程中占用资源最大的前20个对象
 
+```
+jmap -dump:live,format=b,file=heap.hprof <pid>
+```
 
 
 
