@@ -27,6 +27,8 @@ docker exec -ti  <your-container-name>   /bin/sh
 #直接编辑文件
 kubectl edit deploy isc-flow-service
 ...
+kubectl edit svc isc-flow-service
+...
 #使用命令直接修改副本数量
 kubectl scale deploy/isc-dynomicform-service --replicas=2
 ```
@@ -84,5 +86,15 @@ kubectl describe pods my-pod
 
 ```shell
 kubectl edit deploy isc-ias-service
+```
+
+#####Telepresence：让微服务本地开发不再难
+
+```
+Telepresence是一款为Kubernetes微服务框架提供快速本地化开发功能的开源软件。Telepresence在Kubernetes集群中运行的Pod中部署双向网络代理，该Pod将Kubernetes环境（如TCP连接，环境变量，卷）中的数据代理到本地进程。本地进程透明地覆盖其网络，以便DNS调用和TCP连接通过代理路由到远程Kubernetes集群，能够获取远端K8S集群的各项资源。该工具可以实现：
+
+本地服务可以完全访问远程群集中的其他服务；
+本地服务可以完全访问Kubernetes的环境变量，Secrets和ConfigMap；
+K8S中运行的远程服务也可以完全访问本地服务
 ```
 

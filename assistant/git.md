@@ -57,6 +57,9 @@ git reset --soft HEAD^
 ##### 在 tag 代码的基础上做修改，你需要一个分支： 
 
 ```
+git checkout tags/v1.0 -b v1.0-branch
+git fetch --tags
+
 git checkout -b R16.90 RT-V2.0.R16.90.20200928
 
 
@@ -69,5 +72,13 @@ git clone -b R-2.0.R16.40.20191204 https://git.uyunsoft.cn/earth/banda.git
 ```
 git tag -a RT-V2.0.R16.71.20200619  -m "修改校验"
 git push origin RT-V2.0.R16.71.20200619
+```
+
+##### 通过账号和密码获取远程仓库
+
+```
+http://oauth2:33UYAqb6rTZSmnQrNFRv@10.30.30.3/business-builder/open-platform/iop-walle-base-front.git
+
+git clone https://username:password@github.com/username/repository.git
 ```
 
