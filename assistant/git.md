@@ -58,6 +58,7 @@ git reset --soft HEAD^
 
 ```
 git checkout tags/v1.0 -b v1.0-branch
+git branch --set-upstream-to=origin/v1.0 v1.0
 git fetch --tags
 
 git checkout -b R16.90 RT-V2.0.R16.90.20200928
@@ -80,5 +81,16 @@ git push origin RT-V2.0.R16.71.20200619
 http://oauth2:33UYAqb6rTZSmnQrNFRv@10.30.30.3/business-builder/open-platform/iop-walle-base-front.git
 
 git clone https://username:password@github.com/username/repository.git
+```
+
+##### 查看分支创建者时间
+
+```
+列出远程Git分支按作者排序的committerdate：
+git for-each-ref --format='%(committerdate) %09 %(authorname) %09 %(refname)' | sort -k5n -k2M -k3n -k4n
+然后比如你想查看某个分支branch_A, 那么就再后面加上|grep branch_A:
+git for-each-ref --format='%(committerdate) %09 %(authorname) %09 %(refname)' | sort -k5n -k2M -k3n -k4n|grep branch_A
+
+git log --oneline master | cut -d " " -f 1 | tail -1 | xargs git log
 ```
 

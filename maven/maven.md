@@ -57,6 +57,20 @@ mvn clean install -DskipTests -Dfast
 ##### deploy 发布jar到仓库
 
 ```
-mvn install:install-file -Dmaven.test.skip=true -Dfile=taobao-sdk-java-auto_1479188381469-20210922.jar -DgroupId=com.dingtalk.open -DartifactId=taobao-sdk-java-auto -Dversion=1479188381469-20210922 -Dpackaging=jar -DrepositoryId=nexus-releases -Durl=http://10.30.30.3:8081/repository/maven-public/ -Duser=development  -Dpassword=1sysc0re@nexus
+mvn deploy:deploy-file -Dmaven.test.skip=true -Dfile=taobao-sdk-java-auto_1479188381469-20210922.jar -DgroupId=com.dingtalk.open -DartifactId=taobao-sdk-java-auto -Dversion=1479188381469-20210922 -Dpackaging=jar -DrepositoryId=nexus-releases -Durl=http://10.30.30.3:8081/repository/maven-releases/ -Duser=development  -Dpassword=1sysc0re@nexus
+
+
+    <distributionManagement>
+        <repository>
+            <id>nexus-releases</id>
+            <name>Nexus Release Repository</name>
+            <url>http://10.30.30.3:8081/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <name>Nexus Snapshot Repository</name>
+            <url>http://10.30.30.3:8081/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 ```
 

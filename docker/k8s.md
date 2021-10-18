@@ -33,6 +33,14 @@ kubectl edit svc isc-flow-service
 kubectl scale deploy/isc-dynomicform-service --replicas=2
 ```
 
+##### 检查端口
+
+```
+kubectl get svc |grep 29011
+```
+
+
+
 ##### 查看升级信息
 
 ```shell
