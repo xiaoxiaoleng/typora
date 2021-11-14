@@ -94,3 +94,9 @@ git for-each-ref --format='%(committerdate) %09 %(authorname) %09 %(refname)' | 
 git log --oneline master | cut -d " " -f 1 | tail -1 | xargs git log
 ```
 
+##### 直接使用账号密码进行clone
+
+```
+git clone http://oauth2:33UYAqb6rTZSmnQrNFRv@10.30.30.3/business-builder/open-platform/iop-walle-base-front.git
+```
+
