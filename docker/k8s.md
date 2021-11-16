@@ -39,8 +39,6 @@ kubectl scale deploy/isc-dynomicform-service --replicas=2
 kubectl get svc |grep 29011
 ```
 
-
-
 ##### 查看升级信息
 
 ```shell
@@ -222,5 +220,30 @@ kubectl cluster-info dump --output-directory=/path/to/cluster-state   # 将当�
 kubectl taint nodes foo dedicated=special-user:NoSchedule
 ```
 
+##### 查看服务端口是否暴露
 
+```
+kubectl get svc --all-namespaces
+kubectl get svc  isc-common-service
+kubectl get svc | grep isc-common-service
+kubectl get svc -o wide|grep common-service
+```
+
+##### 编辑暴露端口
+
+```
+kubectl edit svc  isc-common-service
+
+类型指定为NodePort
+type: NodePort
+ports:
+ nodePort: ****
+```
+
+##### 查看个别容器资源使用情况
+
+```
+docker stats --no-stream  b439f1c78d4a
+watch -n 1 "docker stats --no-stream  b439f1c78d4a"
+```
 
