@@ -164,5 +164,12 @@ show full processlist;
 杀死进程
 kill query 293804;
 
+show variables like '%max_connection%';
+show variables like 'wait_timeout%'
+show status like 'Threads%';
+show full processlist
+-- set gloable wait_timeout
+-- set GLOBAL wait_timeout = 600;
+-- select id, db, user, host, command, time, state, info from information_schema.processlist order by time desc
 ```
 
