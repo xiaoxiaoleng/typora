@@ -146,7 +146,7 @@ kubectl get pv --sort-by=.spec.capacity.storage
 kubectl get pods --field-selector=status.phase=Running
 ```
 
-##### #####更新资源
+##### 更新资源
 
 ```
 kubectl set image deployment/frontend www=image:v2               # 滚动更新 "frontend" Deployment 的 "www" 容器镜像
@@ -245,5 +245,17 @@ ports:
 ```
 docker stats --no-stream  b439f1c78d4a
 watch -n 1 "docker stats --no-stream  b439f1c78d4a"
+```
+
+##### 查看内部IP
+
+```
+kubectl get pod -o wide | grep function
+```
+
+##### 产看镜像
+
+```
+kubectl get deploy  isc-common-service -o wide
 ```
 
