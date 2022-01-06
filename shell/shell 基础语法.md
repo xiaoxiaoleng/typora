@@ -158,3 +158,20 @@ ls -lrsh
 ls -lsh
 ```
 
+
+
+##### 拷贝文件
+
+```
+拷贝文件到172.19.2.75:/home/root
+scp -r /home/daisy/full.tar.gz root@172.19.2.75:/home/root
+
+scp /Users/xiaozhong/mysql/init/TestMysql.java root@10.1.241.56:/opt/platform-mysql/
+
+scp -r /Users/xiaozhong/OS broada@10.1.241.23:~
+
+scp /Users/xiaozhong/mysql/init/TestMysql.java root@10.1.241.56:
+```
+
+
+

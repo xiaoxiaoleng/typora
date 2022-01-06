@@ -17,12 +17,6 @@ kubectl exec -ti <your-pod-name>  -n <your-namespace>  -- /bin/sh
 kubectl exec -ti isc-flow-service-548d6cff76-9xmbl -- /bin/sh
 ```
 
-##### 进入docker容器
-
-```shell
-docker exec -ti  <your-container-name>   /bin/sh
-```
-
 ##### 编辑副本数
 
 ```shell
@@ -259,5 +253,11 @@ kubectl get pod -o wide | grep function
 
 ```
 kubectl get deploy  isc-common-service -o wide
+```
+
+##### 更新镜像
+
+```
+kubectl edit deploy isc-apaas-service
 ```
 

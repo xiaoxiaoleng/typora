@@ -51,7 +51,20 @@ git push -u origin feature_branch_name
 ##### 撤销缓冲区提交但没有推送的内容
 
 ```
+git reset的作用是修改HEAD的位置，即将HEAD指向的位置改变为之前存在的某个版本
+适用场景： 如果想恢复到之前某个提交的版本，且那个版本之后提交的版本我们都不要了，就可以用这种方法。
 git reset --soft HEAD^
+
+查看历史提交
+git log
+git log --pretty=oneline
+查看每一次命令记录
+git reflog
+
+git reset –-soft：回退到某个版本，只回退了commit的信息，不会恢复到index file一级。如果还要提交，直接commit即可；
+git reset -–hard：彻底回退到某个版本，本地的源码也会变为上一个版本的内容，撤销的commit中所包含的更改被冲掉；
+
+git revert commit_id
 ```
 
 ##### 在 tag 代码的基础上做修改，你需要一个分支： 
@@ -66,6 +79,14 @@ git checkout -b R16.90 RT-V2.0.R16.90.20200928
 
 git clone -b branch_name url
 git clone -b R-2.0.R16.40.20191204 https://git.uyunsoft.cn/earth/banda.git
+```
+
+##### 查看tag
+
+```
+git fetch --tags
+
+git tag
 ```
 
 ##### 创建Tag
