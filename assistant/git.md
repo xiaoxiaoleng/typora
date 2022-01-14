@@ -121,3 +121,27 @@ git log --oneline master | cut -d " " -f 1 | tail -1 | xargs git log
 git clone http://oauth2:33UYAqb6rTZSmnQrNFRv@10.30.30.3/business-builder/open-platform/iop-walle-base-front.git
 ```
 
+#####将旧仓库分支推送到新仓库某一分支
+
+```
+确保仓库代码已经是在最新状态
+git pull
+远程仓库重命名/删除远程仓库
+git remote rename origin old-origin
+git remote rm origin
+添加新远程仓库地址/修改远程分支地址
+git remote add origin ssh://xxxxx.git(ssh地址)
+
+git remote set-url origin ssh://git@10.10.3.189:2222/x86/centos-logos.git
+
+提交旧仓库的temp分支的代码到新仓库master底下
+git push origin temp:master
+```
+
+##### clone指定分支
+
+```
+git clone --branch <branchname> <remote-repo-url>
+git clone -b <branchname> <remote-repo-url>
+```
+

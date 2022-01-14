@@ -357,9 +357,19 @@ https://docs.mongodb.com/manual/tutorial/enable-authentication/
 db.getCollection("resObject").find({"$and":[{"attrValues.lifecycleState":{"$exists":"true"}}]},{"_id":1,"attrValues.lifecycleState":1})
 ```
 
-##### ISODate字段查询
+##### 组合索引
 
-```
-
+```javascript
+db.person.save({ 
+    "_id" : ObjectId("61d538b48efd0f502c36a196"), 
+    "firstname" : "123", 
+    "lastname" : "456", 
+    "_class" : "com.isyscore.ocean.pojo.Person"
+});
+db.person.createIndex({"firstname":-1,"lastname":-1});
+//会走索引
+db.person.find({"firstname":"8"}).explain("executionStats");
+//全表扫描-索引不生效
+db.person.find({"lastname":"8"}).explain("executionStats")
 ```
 
