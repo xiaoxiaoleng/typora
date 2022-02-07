@@ -378,18 +378,18 @@ db.person.find({"lastname":"8"}).explain("executionStats")
 ```javascript
 (function () {
     var counter = { val: 0 };//全局变量
-    var mapFunction1 = function () {
+    var mapFunction = function () {
         emit(this._id, counter.val);
     };
-    var reduceFunction1 = function (_id, count) {
+    var reduceFunction = function (_id, count) {
         if (count++ % 100000 === 0) {
             return count;
         }
     };
 
     db.zdfdtgh.mapReduce(
-        mapFunction1,
-        reduceFunction1,
+        mapFunction,
+        reduceFunction,
         {
             out: "map_reduce_zdfdtgh",
             scope: { counter: counter },
