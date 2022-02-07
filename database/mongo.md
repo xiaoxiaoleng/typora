@@ -373,3 +373,28 @@ db.person.find({"firstname":"8"}).explain("executionStats");
 db.person.find({"lastname":"8"}).explain("executionStats")
 ```
 
+##### mapReduce(慎用,在新的mongo-5.X版后已不再继续更新/维护,最好通过聚合方式-aggregation代替实现)
+
+```javascript
+(function () {
+    var counter = { val: 0 };//全局变量
+    var mapFunction1 = function () {
+        emit(this._id, counter.val);
+    };
+    var reduceFunction1 = function (_id, count) {
+        if (count++ % 100000 === 0) {
+            return count;
+        }
+    };
+
+    db.zdfdtgh.mapReduce(
+        mapFunction1,
+        reduceFunction1,
+        {
+            out: "map_reduce_zdfdtgh",
+            scope: { counter: counter },
+            sort: { natural: 1 }
+        }
+    );
+})();
+```
