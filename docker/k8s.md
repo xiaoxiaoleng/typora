@@ -261,3 +261,9 @@ kubectl get deploy  isc-common-service -o wide
 kubectl edit deploy isc-apaas-service
 ```
 
+##### 查看实例对应镜像
+
+```
+kubectl describe pod  isc-common-service-799c9c8cff-2dp5c
+```
+

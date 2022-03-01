@@ -84,9 +84,12 @@ git clone -b R-2.0.R16.40.20191204 https://git.uyunsoft.cn/earth/banda.git
 ##### 查看tag
 
 ```
+同步远程tag
 git fetch --tags
-
+查看tag
 git tag
+删除tag
+git tag -d <tagname>
 ```
 
 ##### 创建Tag
