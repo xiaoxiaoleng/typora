@@ -90,6 +90,8 @@ git fetch --tags
 git tag
 删除tag
 git tag -d <tagname>
+删除远端tag
+git push --delete origin tagname
 ```
 
 ##### 创建Tag
