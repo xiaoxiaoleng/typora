@@ -74,3 +74,10 @@ mvn deploy:deploy-file -Dmaven.test.skip=true -Dfile=taobao-sdk-java-auto_147918
     </distributionManagement>
 ```
 
+##### 依赖分析
+
+```
+mvn dependency:tree -Dverbose
+mvn dependency:tree -Dverbose -Dincludes=org.apache.curator
+```
+

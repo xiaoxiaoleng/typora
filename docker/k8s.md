@@ -1,5 +1,3 @@
-##### :q!
-
 ##### 查看有哪些服务实例
 
 ```shell
@@ -234,6 +232,69 @@ kubectl edit svc  isc-common-service
 type: NodePort
 ports:
  nodePort: ****
+ 
+ 
+ spec:
+  clusterIP: 10.104.20.48
+  externalTrafficPolicy: Cluster
+  ports:
+  - name: app-mysql
+    nodePort: 33306
+    port: 33306
+    protocol: TCP
+    targetPort: 3306
+  selector:
+    app: app-mysql
+  sessionAffinity: None
+  type: NodePort
+```
+
+##### 暴露dubbo服务端口
+
+```
+- apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:spec:
+        f:externalTrafficPolicy: {}
+        f:ports:
+          k:{"port":20880,"protocol":"TCP"}:
+            .: {}
+            f:name: {}
+            f:nodePort: {}
+            f:port: {}
+            f:protocol: {}
+            f:targetPort: {}
+          k:{"port":32100,"protocol":"TCP"}:
+            f:nodePort: {}
+        f:type: {}
+    manager: kubectl
+    operation: Update
+    time: "2021-06-21T02:35:07Z"
+  name: isc-permission-service
+  
+  ...
+  
+spec:
+  clusterIP: 10.109.240.166
+  externalTrafficPolicy: Cluster
+  ports:
+  - name: isc-permission-service
+    nodePort: 32100
+    port: 32100
+    protocol: TCP
+    targetPort: 32100
+  - name: isc-permission-service-db
+    nodePort: 20880
+    port: 20880
+    protocol: TCP
+    targetPort: 20880
+  selector:
+    app: isc-permission-service
+  sessionAffinity: None
+  type: NodePort
+status:
+  loadBalancer: {}
 ```
 
 ##### 查看个别容器资源使用情况
@@ -265,5 +326,11 @@ kubectl edit deploy isc-apaas-service
 
 ```
 kubectl describe pod  isc-common-service-799c9c8cff-2dp5c
+```
+
+##### 查看日志
+
+```
+kubectl logs -f --tail 200 isc-apaas-service-77f84b7c8f-jmxs8
 ```
 
