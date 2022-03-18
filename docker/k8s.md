@@ -1,4 +1,4 @@
-##### 查看有哪些服务实例
+##### ii查看有哪些服务实例
 
 ```shell
 kubectl get pod

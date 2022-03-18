@@ -173,5 +173,19 @@ scp -r /Users/xiaozhong/OS broada@10.1.241.23:~
 scp /Users/xiaozhong/mysql/init/TestMysql.java root@10.1.241.56:
 ```
 
+##### 登录ftp服务器
 
+```
+sftp -P custom_port remote_username@server_ip_or_hostname
+sftp -P 22222 2022030403781335@sftp.kftpay.com.cn
+```
+
+##### 传送文件
+
+```
+#下载文件
+sftp> get filename.zip local_filename.zip
+#上传文件
+sftp> put -r /home/20220318142520001.zip
+```
 
