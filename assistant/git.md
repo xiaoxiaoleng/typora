@@ -71,8 +71,9 @@ git revert commit_id
 
 ```
 git checkout tags/v1.0 -b v1.0-branch
+git checkout tags/v3.0.10.1-20220228-bugfix  -b v3.0.10.1-20220228-bugfix
 git branch --set-upstream-to=origin/v1.0 v1.0
-git fetch --tags
+git fetch --
 
 git checkout -b R16.90 RT-V2.0.R16.90.20200928
 
