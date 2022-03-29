@@ -1,3 +1,67 @@
+##### 安装mysql
+
+```shell
+#检查是否已经安装过mysql
+rpm -qa | grep mysql 
+#如果安装，则删除
+rpm -e --nodeps mysql-libs-版本 
+#检查mysql用户组和用户，没有则创建
+cat /etc/group | grep mysql
+cat /etc/passwd |grep mysql
+groupadd mysql
+useradd -r -g mysql mysql
+#下载mysql包（可到官网寻找其他版本）
+wget https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.24-linux-glibc2.12-x86_64.tar.gz
+#解压
+tar xzvf mysql-5.7.24-linux-glibc2.12-x86_64.tar.gz
+#解压完成后，移动该文件到/usr/local/mysql
+mv mysql-5.7.24-linux-glibc2.12-x86_64 /usr/local/mysql
+#创建data目录
+mkdir /usr/local/mysql/data
+#更改mysql目录下所有的目录及文件夹所属的用户组和用户，以及权限
+chown -R mysql:mysql /usr/local/mysql
+chmod -R 755 /usr/local/mysql
+#编译安装并初始化mysql,务必记住初始化输出日志末尾的密码（数据库管理员临时密码root@localhost:后的字符串）
+cd /usr/local/mysql/bin
+./mysqld --initialize --user=mysql --datadir=/usr/local/mysql/data --basedir=/usr/local/mysql
+#启动mysql服务器
+/usr/local/mysql/support-files/mysql.server start
+如果出现如下提示信息
+Starting MySQL.Logging to '/usr/local/mysql/data/iZge8dpnu9w2d6Z.err'.
+#查询服务
+ps -ef|grep mysql
+ps -ef|grep mysqld
+#结束进程
+kill -9 PID
+#添加软连接，并重启mysql服务
+ln -s /usr/local/mysql/support-files/mysql.server /etc/init.d/mysql 
+ln -s /usr/local/mysql/bin/mysql /usr/bin/mysql
+service mysql restart
+#登录mysql,密码为刚才的临时密码
+mysql -u root -p
+#首先安装后，执行任何指令都会提示：
+ERROR 1820 (HY000): You must reset your password using ALTER USER statement before executing this statement.
+#将临时密码修改
+>ALTER USER 'root'@'localhost' IDENTIFIED BY '123456' PASSWORD EXPIRE NEVER;
+#刷新权限
+>flush privileges;
+#开放远程连接
+>use mysql;
+>update user set user.Host='%' where user.User='root';
+>flush privileges;
+#设置开机自启
+#1、将服务文件拷贝到init.d下，并重命名为mysql
+cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysqld
+#2、赋予可执行权限
+chmod +x /etc/init.d/mysqld
+#3、添加服务
+chkconfig --add mysqld
+```
+
+
+
+
+
 ### 数据库回滚
 
 ##### 1、Step1: 确认当前binlog

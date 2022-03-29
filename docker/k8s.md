@@ -334,3 +334,10 @@ kubectl describe pod  isc-common-service-799c9c8cff-2dp5c
 kubectl logs -f --tail 200 isc-apaas-service-77f84b7c8f-jmxs8
 ```
 
+##### 修改cm配置 删除pod重启服务
+
+```
+kubectl get cm|grep common
+kubectl edit cm isc-common-service-local-cm
+```
+
