@@ -1,6 +1,6 @@
 ##### create a new repository on the command line
 
-```
+```shell
 echo "# flink-mongodb-test" >> README.md
 git init
 git add README.md
@@ -11,26 +11,26 @@ git push -u origin master
 
 ##### …or push an existing repository from the command line
 
-```
+```shell
 git remote add origin git@github.com:xiaoxiaoleng/flink.git
 git push -u origin master
 ```
 
 ##### 添加所有变更
 
-```
+```shell
 git add -A
 ```
 
 ##### 添加当前变更
 
-```
+```shell
 git add .
 ```
 
 ##### commit
 
-```
+```shell
 git add -A stages all changes
 git add . stages new files and modifications, without deletions
 git add -u stages modifications and deletions, without new files
@@ -38,19 +38,19 @@ git add -u stages modifications and deletions, without new files
 
 ##### Create a new branch:
 
-```
+```shell
 git checkout -b feature_branch_name
 ```
 
 ##### Push your branch to the remote repository:
 
-```
+```shell
 git push -u origin feature_branch_name
 ```
 
 ##### 撤销缓冲区提交但没有推送的内容
 
-```
+```shell
 git reset的作用是修改HEAD的位置，即将HEAD指向的位置改变为之前存在的某个版本
 适用场景： 如果想恢复到之前某个提交的版本，且那个版本之后提交的版本我们都不要了，就可以用这种方法。
 git reset --soft HEAD^
@@ -69,7 +69,7 @@ git revert commit_id
 
 ##### 在 tag 代码的基础上做修改，你需要一个分支： 
 
-```
+```shell
 git checkout tags/v1.0 -b v1.0-branch
 git checkout tags/v3.0.10.1-20220228-bugfix  -b v3.0.10.1-20220228-bugfix
 git branch --set-upstream-to=origin/v1.0 v1.0
@@ -84,7 +84,7 @@ git clone -b R-2.0.R16.40.20191204 https://git.uyunsoft.cn/earth/banda.git
 
 ##### 查看tag
 
-```
+```shell
 同步远程tag
 git fetch --tags
 查看tag
@@ -97,7 +97,7 @@ git push --delete origin tagname
 
 ##### 创建Tag
 
-```
+```shell
 git tag -a RT-V2.0.R16.71.20200619  -m "修改校验"
 git push origin RT-V2.0.R16.71.20200619
 ```
@@ -112,7 +112,7 @@ git clone https://username:password@github.com/username/repository.git
 
 ##### 查看分支创建者时间
 
-```
+```shell
 列出远程Git分支按作者排序的committerdate：
 git for-each-ref --format='%(committerdate) %09 %(authorname) %09 %(refname)' | sort -k5n -k2M -k3n -k4n
 然后比如你想查看某个分支branch_A, 那么就再后面加上|grep branch_A:
@@ -123,13 +123,13 @@ git log --oneline master | cut -d " " -f 1 | tail -1 | xargs git log
 
 ##### 直接使用账号密码进行clone
 
-```
+```shell
 git clone http://oauth2:33UYAqb6rTZSmnQrNFRv@10.30.30.3/business-builder/open-platform/iop-walle-base-front.git
 ```
 
 #####将旧仓库分支推送到新仓库某一分支
 
-```
+```shell
 确保仓库代码已经是在最新状态
 git pull
 远程仓库重命名/删除远程仓库
@@ -146,8 +146,17 @@ git push origin temp:master
 
 ##### clone指定分支
 
-```
+```shell
 git clone --branch <branchname> <remote-repo-url>
 git clone -b <branchname> <remote-repo-url>
+```
+
+##### gitignore不生效问题
+
+```shell
+git rm --cached -r .idea
+git rm -rf .idea
+git commit -m "delete .idea"
+git push
 ```
 
