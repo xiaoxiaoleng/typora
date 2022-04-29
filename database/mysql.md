@@ -288,3 +288,14 @@ python sqlmap.py -u https://open.isyscore.com/api/opencms/search\?current\=1\&si
 ##### 如何发现可注入的点
 
 https://cloud.tencent.com/developer/article/1196791
+
+```
+可能的SQL注入点一般存在于登录页面、查找页面或添加页面等用户可以查找或修改数据的地方
+```
+
+##### BeanUtils.copyProperties(modelFieldParam, modelField);
+
+```
+保存数据时如果方法中使用了BeanUtils.copyProperties(modelFieldParam, modelField);copy对象中的id导致主键冲突产生注入风险
+```
+

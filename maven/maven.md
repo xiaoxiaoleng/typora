@@ -14,7 +14,7 @@ mvn versions:set -DnewVersion=1.1.3
   <plugins>
     <plugin>
       <groupId>org.apache.maven.plugins</groupId>
-      <artifactId> maven-project-info-reports-plugin </artifactId>
+      <artifactId> maven-project-info-reports-plugin</artifactId>
     </plugin>
   </plugins>
 </reporting>

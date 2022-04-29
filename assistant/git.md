@@ -160,3 +160,10 @@ git commit -m "delete .idea"
 git push
 ```
 
+##### 删除分支
+
+```
+git push origin --delete Chapater6   可以删除远程分支Chapater6      
+git branch -d Chapater8 可以删除本地分支（在主分支中）
+```
+
