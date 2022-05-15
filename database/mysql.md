@@ -299,3 +299,15 @@ https://cloud.tencent.com/developer/article/1196791
 保存数据时如果方法中使用了BeanUtils.copyProperties(modelFieldParam, modelField);copy对象中的id导致主键冲突产生注入风险
 ```
 
+##### 按条件导出特定表
+
+```mysql
+mysqldump -uroot -pZljIsysc0re123 isc_ecology_form sys_dict_detail --where=" update_time>'2021-12-04 15:13:52'" > ./temp.sql
+```
+
+##### 命令模式下直接执行sql
+
+```mysql
+mysql>source ./temp.sql
+```
+

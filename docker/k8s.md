@@ -1,4 +1,10 @@
-##### ii查看有哪些服务实例
+##### 容器环境 加入命令
+
+```shell
+apk add scp
+```
+
+##### 查看有哪些服务实例
 
 ```shell
 kubectl get pod
@@ -320,6 +326,8 @@ kubectl get deploy  isc-common-service -o wide
 
 ```
 kubectl edit deploy isc-apaas-service
+
+docker pull 10.30.30.22:9080/isyscore/isc-common-service:v3.0.10.20220505-test
 ```
 
 ##### 查看实例对应镜像
