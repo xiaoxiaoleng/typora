@@ -29,3 +29,9 @@ docker port container_ID #容器ID
 80/tcp -> 0.0.0.0:800
 ```
 
+##### 查看镜像哈希值
+
+```
+docker images --digests
+```
+
