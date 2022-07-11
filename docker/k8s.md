@@ -1,3 +1,9 @@
+##### 查看所有服务
+
+```
+kubectl get services
+```
+
 ##### 容器环境 加入命令
 
 ```shell
