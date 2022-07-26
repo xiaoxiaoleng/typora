@@ -96,6 +96,11 @@ mysqlbinlog mysql-bin.000088 > test1.txt
 
 ```shell
 ./mysqlbinlog --stop-datetime="2019-12-23 15:30:34" -d portal --skip-gtids /opt/dbdata/mysql/mysql_bin.000002 | mysql -udbuser -p
+
+mysqlbinlog --stop-position=450579 /var/lib/mysql/mysql-bin.000017 -d  isc_ecology_form --skip-gtids | mysql -u root -p
+
+--exclude-gtids
+--include-gtid
 ```
 
 ##### 注意事项
