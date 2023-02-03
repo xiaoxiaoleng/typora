@@ -3,7 +3,7 @@
 ##### 1、批量修改版本号
 
 ```
-mvn versions:set -DnewVersion=1.1.3
+mvn versions:set -DnewVersion=1.0.0-SNAPSHOT
 ```
 
 ##### 2、生成依赖报告(htm文档)

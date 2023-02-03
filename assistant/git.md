@@ -167,3 +167,9 @@ git push origin --delete Chapater6   可以删除远程分支Chapater6
 git branch -d Chapater8 可以删除本地分支（在主分支中）
 ```
 
+##### 账号密码clone
+
+```
+git clone https://username:password@github.com/username/repository.git
+```
+

@@ -35,3 +35,9 @@ docker port container_ID #容器ID
 docker images --digests
 ```
 
+##### 查询镜像信息(挂载)
+
+```shell
+docker inspect container_ID
+```
+

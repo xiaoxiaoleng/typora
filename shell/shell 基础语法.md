@@ -189,3 +189,36 @@ sftp> get filename.zip local_filename.zip
 sftp> put -r /home/20220318142520001.zip
 ```
 
+##### 找到命令对应的原文件位置
+
+```shell
+which java
+ls -l /usr/bin/java
+ls -al /etc/alternatives/java
+```
+
+##### mac刷新DNS信息
+
+```shell
+sudo killall -HUP mDNSResponder
+```
+
+##### 时间范围内的查找
+
+```shell
+sed -n '/11:07 18:29:20/,/11:07 18:31:11/p' catalina.out 
+sed -n '/11:07 18:29:/,/11:07 18:31:/p' catalina.out
+```
+
+##### Shell在线调试
+
+```shell
+sh -x ./h2_master.sh restart
+```
+
+##### 根据端口获取进程PID
+
+```shell
+ps -ef | grep  9101  | grep -v grep | awk '{print $2}')"
+```
+
