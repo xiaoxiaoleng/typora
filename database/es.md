@@ -39,11 +39,12 @@ curl 'http://localhost:9200/_cat/indices?v'
 curl 'localhost:9200/_cat/indices?v'
 curl http://localhost:9200/_cluster/health?pretty
 curl 'http://localhost:9200/_cat/indices?v' |grep uni-paycenter
+#创建索引
 curl -XPOST -H 'Content-Type: application/json' 'localhost:9200/uni-paycenter/_doc/1?pretty' -d '
 {
   "name": "uni-paycenter"
 }'
-
+#更新索引
 curl -XPUT -H 'Content-Type: application/json' 'localhost:9200/uni-paycenter/_doc/1?pretty' -d '
 {
   "name": "uni-paycenter"
@@ -55,9 +56,10 @@ curl -XPUT 'http://localhost:9200/_cluster/settings' -d '
         "indices.recovery.max_bytes_per_sec": "100mb"
     }
 }'
-curl -XGET  'localhost:9200/_cat/indices?v&health=red'
-curl -XGET 'localhost:9200/uni-paycenter/1?pretty'
-curl -k -XGET http://127.0.0.1:9200/_cluster/allocation/explain?pretty
+curl -XGET  'http://localhost:9200/_cat/indices?v&health=red'
+#查看索引信息
+curl -XGET 'http://localhost:9200/uni-paycenter?pretty'
+curl -k -XGET 'http://127.0.0.1:9200/_cluster/allocation/explain?pretty'
 
 ```
 
