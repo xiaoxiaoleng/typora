@@ -5,6 +5,10 @@ http://54.180.78.21:5601/app/discover#/?_g=(filters:!(),refreshInterval:(pause:!
 ##### 查看索引
 
 ```shell
+ #磁盘使用情况
+ curl -XGET 'http://localhost:9200/_cat/allocation?v'
+ curl -X GET "localhost:9200/_cluster/settings?flat_settings=true&include_defaults=true&pretty"
+ curl -XGET 'http://localhost:9200/_cluster/allocation/explain?pretty'
 #确定集群状态
 curl 'http://localhost:9200/_cluster/health?pretty'
 #查看所有索引状态
@@ -27,6 +31,18 @@ curl -XPUT "http://localhost:9200/some_index_name/_settings" -d'
     }
   }
 }'
+#检索索引
+curl -X GET "localhost:9200/pc2-risk-api/_search?from=40&size=20&pretty" -H 'Content-Type: application/json' -d'
+{
+  "query": {
+        "range": {
+            "@timestamp": {
+                "lt": "now-1d",
+                "format": "epoch_millis"
+            }
+        }
+    }
+}'
 #删除索引
 curl -XDELETE 'http://localhost:9200/.kibana_task_manager_1?pretty'
 curl -XDELETE 'http://localhost:9200/uni-paycenter?pretty'
@@ -45,10 +61,26 @@ curl -X POST "http://localhost:9200/uni-paycenter/_delete_by_query?pretty" -H 'C
     }
 }'
 
+curl -X POST "localhost:9200/pc2-risk-api/_delete_by_query?pretty" -H 'Content-Type: application/json' -d'
+{
+  "query": {
+        "range": {
+            "@timestamp": {
+                "lt": "now-7d",
+                "format": "epoch_millis"
+            }
+        }
+    }
+}'
+#释放被删文档磁盘空间
+curl -XPOST "http://127.0.0.1:9200/*-*/_forcemerge?only_expunge_deletes=true&max_num_segments=1&flush=true"
+curl -XPOST "http://127.0.0.1:9200/kb5-api/_forcemerge?only_expunge_deletes=true&max_num_segments=1&flush=true"
+curl -XPOST "http://127.0.0.1:9200/*-*/_forcemerge?only_expunge_deletes=true&max_num_segments=1&flush=true"
+
 curl -XPUT 'localhost:9200/uni-paycenter?pretty'
 curl 'http://localhost:9200/_cat/indices?v'
 curl 'http://localhost:9200/_cat/indices?v'
-curl http://localhost:9200/_cluster/health?pretty
+curl 'http://localhost:9200/_cluster/health?pretty'
 curl 'http://localhost:9200/_cat/indices?v' |grep uni-paycenter
 #创建索引
 curl -XPOST -H 'Content-Type: application/json' 'localhost:9200/uni-paycenter/_doc/1?pretty' -d '
@@ -79,6 +111,18 @@ for i in `curl -XGET 'http://localhost:9200/_cat/indices' | awk '{print $3}'`; d
 
 #-u是格式为userName:password，使用Basic Auth进行登录。如果elasticsearch没有使用类似x-pack进行安全登录，则不需要加-u参数
 curl -u 用户名:密码  -H'Content-Type:application/json' -d'{
+    "query": {
+        "range": {
+            "@timestamp": {
+                "lt": "now-7d",
+                "format": "epoch_millis"
+            }
+        }
+    }
+}
+' -XPOST "http://127.0.0.1:9200/*-*/_delete_by_query?pretty"
+
+curl  -H'Content-Type:application/json' -d'{
     "query": {
         "range": {
             "@timestamp": {
@@ -133,5 +177,45 @@ curl -XPUT -H 'Content-Type: application/json' "http://127.0.0.1:9200/_cluster/s
 	"cluster.routing.allocation.enable" : "all"
 	}
 }'
+```
+
+##### A red or yellow cluster status indicates one or more shards are missing or unallocated. These unassigned shards increase your risk of data loss and can degrade cluster performance.
+
+```shell
+curl -X GET "localhost:9200/_cluster/health?filter_path=status,*_shards&pretty"
+#A healthy cluster has a green status and zero unassigned_shards. A yellow status means only replicas are unassigned. A red status means one or more primary shards are unassigned.
+
+#To view unassigned shards, use the cat shards API.
+curl -X GET "localhost:9200/_cat/shards?v=true&h=index,shard,prirep,state,node,unassigned.reason&s=state&pretty"
+
+#To understand why an unassigned shard is not being assigned and what action you must take to allow Elasticsearch to assign it
+curl -X GET "localhost:9200/_cluster/allocation/explain?filter_path=index,node_allocation_decisions.node_name,node_allocation_decisions.deciders.*&pretty" -H 'Content-Type: application/json' -d'
+{
+  "index": "orange-pc-task",
+  "shard": 0,
+  "primary": false
+}'
+
+#fix yellow or red cluster status
+curl -X PUT "localhost:9200/_cluster/settings?pretty" -H 'Content-Type: application/json' -d'
+{
+  "persistent" : {
+    "cluster.routing.allocation.enable" : null
+  }
+}
+'
+
+
+curl -X POST "localhost:9200/_cluster/reroute?metric=none&pretty"
+
+#	单节点的时候设置副本数为零;多节点的时候根据实际情况设置1/2...
+curl -X PUT "localhost:9200/_settings?pretty" -H 'Content-Type: application/json' -d'
+{
+  "index.number_of_replicas": 0
+}'
+
+
+
+
 ```
 

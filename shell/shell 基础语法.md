@@ -222,3 +222,10 @@ sh -x ./h2_master.sh restart
 ps -ef | grep  9101  | grep -v grep | awk '{print $2}')"
 ```
 
+##### 定时输出指标状态信息
+
+```shell
+#每个一秒输出jvm信息
+watch -n 1 jstat  -gcutil 20010
+```
+
