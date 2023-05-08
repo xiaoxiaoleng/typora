@@ -34,6 +34,7 @@ export GOPROXY=https://goproxy.io
 
 ##### 常用命令
 ```
+go env
 go mod init  # 初始化go.mod
 go mod tidy  # 更新依赖文件
 go mod download  # 下载依赖文件
@@ -41,6 +42,8 @@ go mod vendor  # 将依赖转移至本地的vendor文件
 go mod edit  # 手动修改依赖文件
 go mod graph  # 打印依赖图
 go mod verify  # 校验依赖
+#
+https://github.com/goproxy/goproxy.cn/issues/29
 ```
 
 ##### 变量声明(批量声明),使用关键字 var 和括号，可以将一组变量定义放在一起。

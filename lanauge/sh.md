@@ -229,3 +229,13 @@ ps -ef | grep  9101  | grep -v grep | awk '{print $2}')"
 watch -n 1 jstat  -gcutil 20010
 ```
 
+##### 定位日志
+
+```shell
+#得到关键日志的行号
+cat -n test.log | grep “关键词” 
+#表示查询13230539行之后的日志
+tail -n +13230539
+
+```
+

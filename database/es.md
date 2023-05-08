@@ -75,7 +75,7 @@ curl -X POST "localhost:9200/pc2-risk-api/_delete_by_query?pretty" -H 'Content-T
 #释放被删文档磁盘空间
 curl -XPOST "http://127.0.0.1:9200/*-*/_forcemerge?only_expunge_deletes=true&max_num_segments=1&flush=true"
 curl -XPOST "http://127.0.0.1:9200/kb5-api/_forcemerge?only_expunge_deletes=true&max_num_segments=1&flush=true"
-curl -XPOST "http://127.0.0.1:9200/*-*/_forcemerge?only_expunge_deletes=true&max_num_segments=1&flush=true"
+
 
 curl -XPUT 'localhost:9200/uni-paycenter?pretty'
 curl 'http://localhost:9200/_cat/indices?v'
@@ -103,6 +103,8 @@ curl -XGET  'http://localhost:9200/_cat/indices?v&health=red'
 #查看索引信息
 curl -XGET 'http://localhost:9200/uni-paycenter?pretty'
 curl -k -XGET 'http://127.0.0.1:9200/_cluster/allocation/explain?pretty'
+#统计索引数量
+curl -XGET 'http://localhost:9200/_cat/count/uni-paycenter?v'
 
 ## 删除所有索引
 curl -X DELETE 'http://localhost:9200/_all'
