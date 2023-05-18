@@ -64,3 +64,52 @@ docker save city-brain > ./city-brain.tar
 docker load --input  /city-brain.tar
 ```
 
+##### 启动redis
+
+```shell
+docker run -d --network cc-net --restart always -v ~/config/redis/conf/redis.conf:/etc/redis/redis.conf -v ~/data/redis:/data --name redis -p 6379:6379  redis  --appendonly yes --requirepass "123456" 
+```
+
+##### 启动mysql
+
+```
+docker run -d --network cc-net --name mysql -p 3306:3306  -e MYSQL_ROOT_PASSWORD=123456 -v ~/config/mysql/conf:/etc/mysql/conf.d -v ~/data/mysql:/var/lib/mysql -e TZ=Asia/Shanghai --restart=always mysql
+```
+
+##### 启动pgsql
+
+```
+docker run --network cc-net --name postgresql --restart=always -e POSTGRES_USER=root -e POSTGRES_PASSWORD=123456 -p 5432:5432 -v ~/data/postgresql:/var/lib/postgresql/data -d postgres
+```
+
+##### 启动nacos
+
+```shell
+# mysql8对应镜像版本nacos/nacos-server:v2.2.2 空间不存在的话需要创建
+docker run -d --name nacos -p 8848:8848 --network cc-net --link mysql:mysql -e MODE=standalone -e SPRING_DATASOURCE_PLATFORM=mysql -e MYSQL_SERVICE_HOST=192.168.5.23 -e MYSQL_SERVICE_PORT=3306 -e MYSQL_SERVICE_DB_NAME=nacos -e MYSQL_SERVICE_USER=root -e MYSQL_SERVICE_PASSWORD=123456 nacos/nacos-server:v2.2.2
+```
+
+##### 按条件批量删除容器
+
+```
+docker container ps -a | grep kube-* | awk '{print $1}' | xargs docker container rm --force
+```
+
+##### 网络空间
+
+```shell
+docker network ls 
+#删除
+docker network rm
+#查看
+docker network inspect 
+#创建
+docker network create app_net
+```
+
+##### 清理镜像
+
+```shell
+docker system prune
+```
+

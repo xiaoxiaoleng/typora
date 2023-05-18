@@ -9,5 +9,6 @@ sudo /usr/local/bin/nginx -t -c /usr/local/etc/nginx/nginx.conf
 /usr/local/Cellar/nginx/1.21.3/bin/nginx
 
 验证命令为 ./nginx -t
+
 ```
 
