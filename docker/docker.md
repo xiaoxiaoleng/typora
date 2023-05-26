@@ -89,6 +89,15 @@ docker run --network cc-net --name postgresql --restart=always -e POSTGRES_USER=
 docker run -d --name nacos -p 8848:8848 --network cc-net --link mysql:mysql -e MODE=standalone -e SPRING_DATASOURCE_PLATFORM=mysql -e MYSQL_SERVICE_HOST=192.168.5.23 -e MYSQL_SERVICE_PORT=3306 -e MYSQL_SERVICE_DB_NAME=nacos -e MYSQL_SERVICE_USER=root -e MYSQL_SERVICE_PASSWORD=123456 nacos/nacos-server:v2.2.2
 ```
 
+##### 启动mongo
+
+```shell
+docker run -d --privileged --restart=unless-stopped --network cc-net --name mongo -p 27017:27017 -v /data/mongo:/data/db \
+      -e MONGO_INITDB_ROOT_USERNAME=admin \
+      -e MONGO_INITDB_ROOT_PASSWORD=123456 \
+      mongo
+```
+
 ##### 按条件批量删除容器
 
 ```
