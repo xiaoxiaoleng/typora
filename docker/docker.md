@@ -98,6 +98,39 @@ docker run -d --privileged --restart=unless-stopped --network cc-net --name mong
       mongo
 ```
 
+#### mqtt
+
+```
+docker run -d --restart unless-stopped --network cc-net --privileged --name mosquitto -p 1883:1883 \
+ -v ~/docker/mqtt/config/mosquitto.conf:/mosquitto/config/mosquitto.conf \
+ -v ~/docker/mqtt/data:/mosquitto/data \
+ -v ~/docker/mqtt/log:/mosquitto/log \
+ eclipse-mosquitto:1.6.14
+```
+
+##### 生成mqtt密钥文件
+
+```shell
+#在无密码状态下先启动创建密钥并将文件挂载到对应目录
+touch /mosquitto/config/password.conf
+chmod -R 755 /mosquitto/config/password.conf
+mosquitto_passwd -b /mosquitto/config/password.txt root 123456
+#配置文件
+listener 1883
+persistence true
+allow_anonymous false
+password_file /mosquitto/config/password.conf
+#password_file ~/docker/mqtt/config/password.conf
+```
+
+##### 发送topic
+
+```shell
+mosquitto_pub -h mqtt.example.com -p 1883 -t mytopic -m "Hello, MQTT!" -u myuser -P mypassword
+```
+
+
+
 ##### 按条件批量删除容器
 
 ```
