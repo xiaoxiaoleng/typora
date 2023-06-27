@@ -78,29 +78,39 @@ docker run -d --network cc-net --name mysql -p 3306:3306  -e MYSQL_ROOT_PASSWORD
 
 ##### 启动pgsql
 
-```
-docker run --network cc-net --name postgresql --restart=always -e POSTGRES_USER=root -e POSTGRES_PASSWORD=123456 -p 5432:5432 -v ~/data/postgresql:/var/lib/postgresql/data -d postgres
+```shell
+docker run --network cc-net --name postgresql --restart=always -e POSTGRES_USER=root -e POSTGRES_PASSWORD=123456 -p 5432:5432 -v ~/data/postgresql:/var/lib/postgresql/data -d timescale/timescaledb-ha:pg14-latest
 ```
 
 ##### 启动nacos
 
 ```shell
 # mysql8对应镜像版本nacos/nacos-server:v2.2.2 空间不存在的话需要创建
-docker run -d --name nacos -p 8848:8848 --network cc-net --link mysql:mysql -e MODE=standalone -e SPRING_DATASOURCE_PLATFORM=mysql -e MYSQL_SERVICE_HOST=192.168.5.23 -e MYSQL_SERVICE_PORT=3306 -e MYSQL_SERVICE_DB_NAME=nacos -e MYSQL_SERVICE_USER=root -e MYSQL_SERVICE_PASSWORD=123456 nacos/nacos-server:v2.2.2
+docker run -d --name nacos -p 8848:8848 --network cc-net --link mysql:mysql -e MODE=standalone -e SPRING_DATASOURCE_PLATFORM=mysql -e MYSQL_SERVICE_HOST=127.0.0.1 -e MYSQL_SERVICE_PORT=3306 -e MYSQL_SERVICE_DB_NAME=nacos -e MYSQL_SERVICE_USER=root -e MYSQL_SERVICE_PASSWORD=123456 nacos/nacos-server:v2.2.2
 ```
 
 ##### 启动mongo
 
 ```shell
-docker run -d --privileged --restart=unless-stopped --network cc-net --name mongo -p 27017:27017 -v /data/mongo:/data/db \
+docker run -d --privileged --restart=unless-stopped --network cc-net --name mongo -p 27017:27017 -v ~/data/mongo:/data/db \
       -e MONGO_INITDB_ROOT_USERNAME=admin \
       -e MONGO_INITDB_ROOT_PASSWORD=123456 \
-      mongo
+      mongo --auth
 ```
+
+##### 运行superset
+
+```shell
+docker run -d --privileged --restart=unless-stopped --network cc-net -p 8088:8088 -e SUPERSET_SECRET_KEY=123456 --name superset apache/superset
+```
+
+https://hub.docker.com/r/apache/superset
+
+
 
 #### mqtt
 
-```
+```shell
 docker run -d --restart unless-stopped --network cc-net --privileged --name mosquitto -p 1883:1883 \
  -v ~/docker/mqtt/config/mosquitto.conf:/mosquitto/config/mosquitto.conf \
  -v ~/docker/mqtt/data:/mosquitto/data \
