@@ -102,6 +102,32 @@ docker run -d --privileged --restart=unless-stopped --network cc-net --name mong
 
 ```shell
 docker run -d --privileged --restart=unless-stopped --network cc-net -p 8088:8088 -e SUPERSET_SECRET_KEY=123456 --name superset apache/superset
+
+docker exec -it superset superset fab create-admin \
+              --username admin \
+              --firstname Superset \
+              --lastname Admin \
+              --email admin@superset.com \
+              --password admin
+
+docker exec -it superset superset db upgrade
+
+#可跳过不执行
+docker exec -it superset superset load_examples
+#初始化数据
+docker exec -it superset superset init
+
+#本地部署操作
+https://github.com/apache/superset/tree/master/docker#readme
+
+#部署本地的镜像
+#默认内置数据库地址 /app/superset_home/superset.db
+#mysql://mysqluser:mysqluserpassword@localhost/superset?charset=utf8
+docker run -d --privileged --restart=unless-stopped --network cc-net -p 8088:8088 -e SUPERSET_SECRET_KEY=lWJNih/Aklg/m9PKGwpsmI6wMFPN3sbWQxP57JEMNYr99si6OLfSOrlU --name superset  superset_local
+
+docker run -d --privileged --restart=unless-stopped --network cc-net -p 8088:8088 -e SUPERSET_SECRET_KEY=lWJNih/Aklg/m9PKGwpsmI6wMFPN3sbWQxP57JEMNYr99si6OLfSOrlU --name superset -v ~/data/superset/:/app/superset_home/  superset_local
+
+docker cp superset:/app/superset_home/superset.db ~/data/superset
 ```
 
 https://hub.docker.com/r/apache/superset
