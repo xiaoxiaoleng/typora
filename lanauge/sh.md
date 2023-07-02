@@ -239,3 +239,9 @@ tail -n +13230539
 
 ```
 
+##### 配置hosts文件
+
+```
+echo "127.0.0.1 dev.appsmith.com" | sudo tee -a /etc/hosts
+```
+
