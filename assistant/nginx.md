@@ -1,6 +1,6 @@
 ```shell
 #重新装载配置
-/usr/local/nginx/sbin/nginx -s reload /usr/local/nginx/conf/nginx.conf
+/usr/local/nginx/sbin/nginx -s reload /usr/local/etc/nginx/nginx.conf
 #指定加载的配置文件
 sudo nginx -c /usr/local/etc/nginx/nginx.conf
 #校验文件的正确性
