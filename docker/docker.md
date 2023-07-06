@@ -162,7 +162,7 @@ password_file /mosquitto/config/password.conf
 ##### 发送topic
 
 ```shell
-mosquitto_pub -h mqtt.example.com -p 1883 -t mytopic -m "Hello, MQTT!" -u myuser -P mypassword
+mosquitto_pub -h 127.0.0.1 -p 1883 -t mytopic -m "Hello, MQTT!" -u myuser -P mypassword
 ```
 
 
