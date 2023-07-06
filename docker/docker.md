@@ -159,10 +159,10 @@ password_file /mosquitto/config/password.conf
 #password_file ~/docker/mqtt/config/password.conf
 ```
 
-##### 发送topic
+##### 发送topic(在mosquitto容器内执行)
 
 ```shell
-mosquitto_pub -h 127.0.0.1 -p 1883 -t mytopic -m "Hello, MQTT!" -u myuser -P mypassword
+mosquitto_pub -h 127.0.0.1 -p 1883 -t mytopic -m "Hello, MQTT!" -u root -P 123456
 ```
 
 
