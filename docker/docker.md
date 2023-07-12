@@ -79,7 +79,11 @@ docker run -d --network cc-net --name mysql -p 3306:3306  -e MYSQL_ROOT_PASSWORD
 ##### 启动pgsql
 
 ```shell
+#支持时序
 docker run --network cc-net --name postgresql --restart=always -e POSTGRES_USER=root -e POSTGRES_PASSWORD=123456 -p 5432:5432 -v ~/data/postgresql:/var/lib/postgresql/data -d timescale/timescaledb-ha:pg14-latest
+
+#安装最新版本
+docker run -d --network cc-net --name postgresql --restart=always -e POSTGRES_USER=root -e POSTGRES_PASSWORD=123456 -p 5432:5432 -v ~/data/postgresql:/var/lib/postgresql/data postgres
 ```
 
 ##### 启动nacos
@@ -165,7 +169,12 @@ password_file /mosquitto/config/password.conf
 mosquitto_pub -h 127.0.0.1 -p 1883 -t mytopic -m "Hello, MQTT!" -u root -P 123456
 ```
 
+##### 部署emqx
 
+```shell
+#http://localhost:18083/ 默认账户密码admin/public
+docker run -d --name emqx --network cc-net --privileged --restart always -p 1883:1883 -p 8083:8083 -p 8084:8084 -p 8883:8883 -p 18083:18083 emqx/emqx:5.1.1
+```
 
 ##### 按条件批量删除容器
 

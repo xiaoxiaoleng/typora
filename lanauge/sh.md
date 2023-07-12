@@ -245,3 +245,16 @@ tail -n +13230539
 echo "127.0.0.1 dev.appsmith.com" | sudo tee -a /etc/hosts
 ```
 
+##### sdk 版本管理
+
+```shell
+sdk current
+sdk list java
+sdk upgrade
+sdk install java 11.0.19-tem
+sdk use java 11.0.19-tem
+sdk default java 11.0.19-tem
+sdk uninstall java 14.0.1.j9-adpt
+sdk flush
+```
+
