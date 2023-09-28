@@ -200,3 +200,15 @@ docker network create app_net
 docker system prune
 ```
 
+##### 将文件copy到容器内
+
+```
+docker cp output_file.dump postgresql:~
+```
+
+##### 容器内文件copy到宿主机
+
+```
+docker cp postgresql:/home/postgres/output_file.sql /Users/xiaozhong/Downloads
+```
+

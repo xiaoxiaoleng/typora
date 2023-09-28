@@ -81,3 +81,15 @@ mvn dependency:tree -Dverbose
 mvn dependency:tree -Dverbose -Dincludes=org.apache.curator
 ```
 
+##### 使用本地缓存
+
+```
+mvn clean install -o
+```
+
+##### 本地maven地址
+
+```
+/usr/local/apache-maven/apache-maven-3.8.6/conf/settings.xml
+```
+

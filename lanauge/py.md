@@ -33,3 +33,8 @@ pyenv install --list
 pyenv uninstall 3.7.9
 ```
 
+##### 安装依赖
+
+```python
+pip install -r requirements.txt
+```
