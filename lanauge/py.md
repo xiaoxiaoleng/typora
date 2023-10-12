@@ -38,3 +38,10 @@ pyenv uninstall 3.7.9
 ```python
 pip install -r requirements.txt
 ```
+
+##### 指定依赖的版本与镜像源
+
+```python
+pip install grpcio==1.43.0 -i https://mirrors.aliyun.com/pypi/simple/
+```
+
