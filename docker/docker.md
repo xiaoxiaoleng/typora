@@ -138,6 +138,14 @@ https://hub.docker.com/r/apache/superset
 
 
 
+##### 启动本地nacos
+
+````shell
+docker-compose -f /Users/xiaozhong/docker/nacos/nacos-docker/example/docker-compose.yaml up -d
+````
+
+
+
 #### mqtt
 
 ```shell
