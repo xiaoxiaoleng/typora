@@ -316,3 +316,20 @@ mysqldump -uroot -pZljIsysc0re123 isc_ecology_form sys_dict_detail --where=" upd
 mysql>source ./temp.sql
 ```
 
+##### postgresql查看用户连接及杀死会话
+
+```sql
+#SELECT pg_terminate_backend(pid)
+#FROM pg_stat_activity
+#WHERE datname = 'thingsboard';
+#DROP DATABASE thingsboard;
+select * from pg_stat_activity;
+select * from pg_stat_activity WHERE datname = 'thingsboard';
+#杀死thingsboard链接会话
+SELECT pg_terminate_backend(pg_stat_activity.pid)
+FROM pg_stat_activity
+WHERE pg_stat_activity.datname = 'thingsboard'
+  AND pid <> pg_backend_pid();
+
+```
+

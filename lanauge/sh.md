@@ -258,3 +258,11 @@ sdk uninstall java 14.0.1.j9-adpt
 sdk flush
 ```
 
+##### 分割查看
+
++ 分割大文件  split -l 100000 baafcb066e92940a30425d61ade7083659764decc377ffc2242b6e90012c37fd-json.log cchub_log_part_
++ 查看特定时间点的日志 grep "2024-06-24 15:45" /var/log/myapp.log
++ 查看特定时间点及前后10行日志 grep -A 10 -B 10 "2024-06-24 15:45" /var/log/myapp.log
++ 用less翻页查看特定时间点的日志 grep "2024-06-24 15:45" /var/log/myapp.log | less
++ 用awk查看特定时间点的日志 awk '$0 ~ /2024-06-24 15:45/' /var/log/myapp.log
+

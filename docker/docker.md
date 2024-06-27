@@ -35,6 +35,15 @@ docker port container_ID #容器ID
 docker images --digests
 ```
 
+##### **禁用缓存**：使用 `--no-cache` 参数来禁用构建缓存，强制Docker引擎重新构建每个层。
+
+```
+docker build --no-cache -t your-image-name:tag .
+docker build --no-cache  -f Dockerfile -t superset_mysql .
+```
+
+
+
 ##### 查询镜像信息(挂载)
 
 ```shell
@@ -91,6 +100,8 @@ docker run -d --network cc-net --name postgresql --restart=always -e POSTGRES_US
 ```shell
 # mysql8对应镜像版本nacos/nacos-server:v2.2.2 空间不存在的话需要创建
 docker run -d --name nacos -p 8848:8848 --network cc-net --link mysql:mysql -e MODE=standalone -e SPRING_DATASOURCE_PLATFORM=mysql -e MYSQL_SERVICE_HOST=127.0.0.1 -e MYSQL_SERVICE_PORT=3306 -e MYSQL_SERVICE_DB_NAME=nacos -e MYSQL_SERVICE_USER=root -e MYSQL_SERVICE_PASSWORD=123456 nacos/nacos-server:v2.2.2
+
+docker run --name nacos -e MODE=standalone -p 8848:8848 -p 9848:9848 -d nacos/nacos-server:latest
 ```
 
 ##### 启动mongo
@@ -132,6 +143,9 @@ docker run -d --privileged --restart=unless-stopped --network cc-net -p 8088:808
 docker run -d --privileged --restart=unless-stopped --network cc-net -p 8088:8088 -e SUPERSET_SECRET_KEY=lWJNih/Aklg/m9PKGwpsmI6wMFPN3sbWQxP57JEMNYr99si6OLfSOrlU --name superset -v ~/data/superset/:/app/superset_home/  superset_local
 
 docker cp superset:/app/superset_home/superset.db ~/data/superset
+
+#证书失败时可以运行参数设定SUPERSET_SECRET_KEY
+docker run -d --privileged --restart=unless-stopped --network cc-net -p 8088:8088 -e SUPERSET_SECRET_KEY=lWJNih/Aklg/m9PKGwpsmI6wMFPN3sbWQxP57JEMNYr99si6OLfSOrlU --name superset  superset_mysql
 ```
 
 https://hub.docker.com/r/apache/superset
@@ -142,6 +156,9 @@ https://hub.docker.com/r/apache/superset
 
 ````shell
 docker-compose -f /Users/xiaozhong/docker/nacos/nacos-docker/example/docker-compose.yaml up -d
+#编排文件
+cd /Users/xiaozhong/docker
+docker-compose up -d nacos
 ````
 
 
