@@ -266,3 +266,11 @@ sdk flush
 + 用less翻页查看特定时间点的日志 grep "2024-06-24 15:45" /var/log/myapp.log | less
 + 用awk查看特定时间点的日志 awk '$0 ~ /2024-06-24 15:45/' /var/log/myapp.log
 
+
+
+###### 检索内容
+
+```shell
+find / -type f -name "*.*" | xargs grep "bootstrap.min.css.map"
+```
+
